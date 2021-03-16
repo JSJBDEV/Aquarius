@@ -1,0 +1,26 @@
+modLoader = "javafml"
+loaderVersion = "[33,)"
+issueTrackerURL = "https://github.com/JSJBDEV/Aquarius-Fabric/issues" #optional
+logoFile = "icon.png"
+license = "Apache-2.0"
+[[mods]]
+modId = "aquarius"
+version = "${version}"
+displayName = "Aquarius Forge"
+description = '''
+More water features
+'''
+
+[[dependencies.aquarius]]
+modId = "cloth-config"
+mandatory = true
+versionRange = "[4.10.13,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.aquarius]]
+modId = "architectury"
+mandatory = true
+versionRange = "[1.5.112,)"
+ordering = "NONE"
+side = "CLIENT"

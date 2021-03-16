@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "space.bbkr.aquarius.fabric.mixin",
+  "minVersion": "0.7.11",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinChanneling",
+    "MixinPlayerEntity",
+    "MixinTridentEntity",
+    "MixinTridentItem"
+  ],
+  "client": [
+    "MixinClientPlayNetworkHandler"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

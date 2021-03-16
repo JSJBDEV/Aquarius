@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "aquarius",
+  "version": "$version",
+
+  "name": "Aquarius",
+  "icon": "assets/aquarius/icon.png",
+  "description": "More water features!",
+  "licence": "LGPL v3",
+  "contact": {
+    "sources": "https://github.com/JSJBDEV/Aquarius-Fabric",
+    "issues": "https://github.com/JSJBDEV/Aquarius-Fabric/issues"
+  },
+
+  "environment": "*",
+  "entrypoints": {
+  },
+  "mixins": [
+  ],
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  }
+}

@@ -1,0 +1,31 @@
+{
+    "schemaVersion": 1,
+    "id": "aquarius_fabric",
+    "version": "$version",
+    "name": "Aquarius Fabric",
+    "icon": "assets/aquarius/icon.png",
+    "description": "More water features!",
+    "licence": "LGPL v3",
+    "contact": {
+        "sources": "https://github.com/JSJBDEV/Aquarius-Fabric",
+        "issues": "https://github.com/JSJBDEV/Aquarius-Fabric/issues"
+    },
+    "entrypoints": {
+        "main": [
+            "space.bbkr.aquarius.fabric.AquariusFabric::initialize"
+        ],
+        "client": [
+            "space.bbkr.aquarius.fabric.AquariusClientEntry::initClient"
+        ]
+    },
+    "license": "Apache-2.0",
+    "mixins": [
+        "aquarius-fabric.mixin.json"
+    ],
+    "accessWidener": "aquarius.accesswidener",
+    "depends": {
+        "fabric": ">=0.29.1",
+        "architectury": ">=1.5.112",
+        "cloth-config2": ">=4.10.13"
+    }
+}

@@ -1,0 +1,91 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "5.0.0"
+}
+
+minecraft {
+    accessWidener = file("src/main/resources/aquarius.accesswidener")
+}
+
+architectury {
+//    transformerVersion = "2.0.9999"
+    platformSetupLoomIde()
+    fabric()
+}
+
+processResources {
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+    inputs.property "version", project.version
+}
+
+configurations {
+    shadow
+}
+
+repositories {
+    mavenLocal()
+    maven {url "https://maven.misterpemodder.com/libs-release/"}
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.terraformersmc.com/releases/" }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${rootProject.architectury.minecraft}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modCompile "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+
+    modCompile "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}") {
+        transitive = false
+    }
+
+    modCompile("me.shedaniel:architectury-fabric:${rootProject.architectury_version}")
+    modCompile("com.misterpemodder:shulkerboxtooltip:${rootProject.shulkerboxtooltip_version}"){
+//        transitive = false
+        exclude(group: "io.github.prospector")
+        exclude(group: "me.shedaniel.cloth")
+    }
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:5.10.184")
+    modRuntime("me.shedaniel:RoughlyEnoughItems:5.10.184"){
+    }
+
+    modCompile('curse.maven:not-enough-crashes-353890:3226331'){
+        transitive = false
+
+    }
+
+    implementation(project(path: ":common")) {
+        transitive = false
+    }
+    developmentFabric(project(path: ":common")) {
+        transitive = false
+    }
+    shadow(project(path: ":common", configuration: "transformProductionFabric")) {
+        transitive = false
+    }
+}
+
+shadowJar {
+    relocate "space.bbkr.aquarius.common", "space.bbkr.aquarius.common.fabric"
+
+    configurations = [project.configurations.shadow]
+    classifier "shadow"
+}
+
+remapJar {
+    dependsOn(shadowJar)
+    input.set(shadowJar.archivePath)
+    archiveClassifier = "fabric"
+}
+
