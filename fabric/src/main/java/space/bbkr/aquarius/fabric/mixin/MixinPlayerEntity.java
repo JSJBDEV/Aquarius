@@ -105,9 +105,9 @@ public abstract class MixinPlayerEntity extends LivingEntity implements IAirSwim
                 if (this.isSprinting()) {
                     this.move(MovementType.SELF, new Vec3d(look.x / 4, look.y / 4, look.z / 4));
                 }
-            }
-        } else if (this.lastSwimming) {
+            } else if (this.lastSwimming) {
             NETWORK.sendToServer(new AirSwimmingC2SMsg(false));
+            }
         }
         this.lastSwimming = this.isSwimming();
     }
