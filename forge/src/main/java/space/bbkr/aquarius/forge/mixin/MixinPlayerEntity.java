@@ -1,10 +1,13 @@
 package space.bbkr.aquarius.forge.mixin;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -54,7 +57,7 @@ public abstract class MixinPlayerEntity extends LivingEntity implements IAirSwim
 
     private boolean lastSwimming = false;
     private int serverSwimming = 0;
-//
+
     public void setServerSwimming(boolean swimming) {
         serverSwimming = swimming ? 200 : 0;
     }
@@ -63,7 +66,7 @@ public abstract class MixinPlayerEntity extends LivingEntity implements IAirSwim
     public boolean getLastAirSwimming() {
         return lastSwimming;
     }
-//
+    //
     @Inject(method = "updateSwimming", at = @At("TAIL"))
     private void updateAirSwimming(CallbackInfo ci) {
         if (this.hasStatusEffect(Aquarius.ATLANTEAN)) {
@@ -105,9 +108,15 @@ public abstract class MixinPlayerEntity extends LivingEntity implements IAirSwim
                 if (this.isSprinting()) {
                     this.move(MovementType.SELF, new Vec3d(look.x / 4, look.y / 4, look.z / 4));
                 }
+            } else if (this.lastSwimming) {
+                if(!this.world.isClient){
+                    serverSwimming = 0;
+                }
+                else
+                {
+                    NETWORK.sendToServer(new AirSwimmingC2SMsg(false));
+                }
             }
-        } else if (this.lastSwimming) {
-            NETWORK.sendToServer(new AirSwimmingC2SMsg(false));
         }
         this.lastSwimming = this.isSwimming();
     }
